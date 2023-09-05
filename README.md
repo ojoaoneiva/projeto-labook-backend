@@ -6,7 +6,7 @@
 ## [API Docummentation](https://documenter.getpostman.com/view/27685475/2s9Y5eNzL8)
 
 ## About:
-The "Labook" project aims to build the backend of a small social media plataform and its API and database, with data source for users, posts, post's comments and likes. The project uses layered architecture and poo to estructure the code.
+The "Labook" project aims to build the backend of a small social media plataform and its API and database, with data source for users, posts, post's comments and likes. The project uses layered architecture and poo to estructure the code. 
 
 ---
 
