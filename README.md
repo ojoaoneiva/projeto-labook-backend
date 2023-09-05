@@ -1,85 +1,63 @@
-# Projeto Labook
-O Labook é uma rede social com o objetivo de promover a conexão e interação entre pessoas. Quem se cadastrar no aplicativo poderá criar e curtir publicações.
+# Labook
 
-Agora que temos as bases de criação de APIs e banco de dados, o próximo nível é a implementação de segurança e códigos mais escaláveis. Veremos durante o prazo de entrega desse projeto inúmeros conceitos e formas de desenvolvimento seguindo padrões de design e arquitetura, e seu desafio será unir as funcionalidades com as boas práticas de código.
+Go to the API Docummentation [here](https://documenter.getpostman.com/view/27685475/2s9Y5eNzL8)
 
-# Conteúdos abordados
-- NodeJS
+## About:
+The "Labook" project aims to build the backend of a small social media plataform and its API and database, with data source for users, posts, post's comments and likes. The project uses layered architecture and poo to estructure the code.
+
+---
+
+## Functionalities:
+- [x]   <strong>Login Page:</strong> The user can connect (if the user and email are valid and previously created) and the app will autenticat the data, and generate an acess token and go to the Feed page.
+- [x]  <strong>Sign up Page:</strong> The user can creat an account (with email that haven't been used before), and the app will generate an acess JWT token and go to the Feed page.
+- [x]  <strong>Feed page:</strong> Only authorized to be seen if a valid user is logged and the JWT token. The page shows all the posts created by all users.
+- [x]  <strong>Like or dislike:</strong> The user can like or dislike a post.
+- [x]  <strong>Create post:</strong> The user can create on the textfield a new post.
+- [x]  <strong>Edit post:</strong> The user can edit a post if he/she created it.
+- [x]  <strong>Delete post:</strong> The user can delete a post if he/she created it.
+- [x]  <strong>Layered Architecture:</strong> The app's structure was built and organized with layered architecture to make the code more organized and for its reusability, maintainability and scalability.
+- [x]  <strong>Hashed passwords:</strong> All the passwords are hashed using BcryptJS before its storage on the databse, so the information is protected.
+- [x]  <strong>Database:</strong> All the users, posts, comments and likes/dislikes information are storaged on an SQLite database in the backend.
+---
+
+## How to run the project:
+
+```bash
+# Clone the project's repository:
+    git clone https://github.com/ojoaoneiva/projeto-labook-backend.git
+
+# Enter the back-end paste:
+    cd projeto-labook-backend
+
+# Install the app's dependencies:
+    npm i
+
+# Run the application in developpement mode:
+    npm run dev
+
+# The server will start on localhost:3003
+```
+---
+
+## Technologies used:
+- Node JS
 - Typescript
 - Express
-- SQL e SQLite
+- SQLite
 - Knex
+- UUID
+- BcryptJS
+- JWT
+- ZOD
 - POO
-- Arquitetura em camadas
-- Geração de UUID
-- Geração de hashes
-- Autenticação e autorização
-- Roteamento
+- Express router
+- Layred Architecture
 - Postman
+---
 
-# Banco de dados
-![projeto-labook (2)](https://user-images.githubusercontent.com/29845719/216036534-2b3dfb48-7782-411a-bffd-36245b78594e.png)
-
-https://dbdiagram.io/d/63d16443296d97641d7c1ae1
-
-# Lista de requisitos
-- Documentação Postman de todos os endpoints (obrigatória para correção)
-
-- Endpoints
-    - [ ]  signup
-    - [ ]  login
-    - [ ]  create post
-    - [ ]  get posts
-    - [ ]  edit post
-    - [ ]  delete post
-    - [ ]  like / dislike post
-
-- Autenticação e autorização
-    - [ ]  identificação UUID
-    - [ ]  senhas hasheadas com Bcrypt
-    - [ ]  tokens JWT
- 
- - Código
-    - [ ]  POO
-    - [ ]  Arquitetura em camadas
-    - [ ]  Roteadores no Express
-
-- README.md
-
-# Token payload e User roles
-O enum de roles e o payload do token JWT devem estar no seguinte formato:
-```typescript
-export enum USER_ROLES {
-    NORMAL = "NORMAL",
-    ADMIN = "ADMIN"
-}
-
-export interface TokenPayload {
-    id: string,
-    name: string,
-    role: USER_ROLES
-}
 ```
 
 # Exemplos de requisição
-
-## Signup
-Endpoint público utilizado para cadastro. Devolve um token jwt.
-```typescript
-// request POST /users/signup
-// body JSON
-{
-  "name": "Beltrana",
-  "email": "beltrana@email.com",
-  "password": "beltrana00"
-}
-
-// response
-// status 201 CREATED
-{
-  token: "um token jwt"
-}
-```
 
 ## Login
 Endpoint público utilizado para login. Devolve um token jwt.
@@ -150,77 +128,3 @@ Endpoint protegido, requer um token jwt para acessá-lo.
 ]
 ```
 
-
-## Edit post
-Endpoint protegido, requer um token jwt para acessá-lo.<br>
-Só quem criou o post pode editá-lo e somente o conteúdo pode ser editado.
-```typescript
-// request PUT /posts/:id
-// headers.authorization = "token jwt"
-// body JSON
-{
-    "content": "Partiu happy hour lá no point de sempre!"
-}
-
-// response
-// status 200 OK
-```
-
-## Delete post
-Endpoint protegido, requer um token jwt para acessá-lo.<br>
-Só quem criou o post pode deletá-lo. Admins podem deletar o post de qualquer pessoa.
-- garanta que ele continue funcionando depois de implementar o LIKE e DISLIKE!
-
-```typescript
-// request DELETE /posts/:id
-// headers.authorization = "token jwt"
-
-// response
-// status 200 OK
-```
-
-## Like or dislike post (mesmo endpoint faz as duas coisas)
-
-Endpoint protegido, requer um token jwt para acessá-lo.<br>
-Quem criou o post não pode dar like ou dislike no mesmo.<br><br>
-Caso dê um like em um post que já tenha dado like, o like é desfeito.<br>
-Caso dê um dislike em um post que já tenha dado dislike, o dislike é desfeito.<br><br>
-Caso dê um like em um post que tenha dado dislike, o like sobrescreve o dislike.<br>
-Caso dê um dislike em um post que tenha dado like, o dislike sobrescreve o like.
-### Like (funcionalidade 1)
-```typescript
-// request PUT /posts/:id/like
-// headers.authorization = "token jwt"
-// body JSON
-{
-    "like": true
-}
-
-// response
-// status 200 OK
-```
-
-### Dislike (funcionalidade 2)
-```typescript
-// request PUT /posts/:id/like
-// headers.authorization = "token jwt"
-// body JSON
-{
-    "like": false
-}
-
-// response
-// status 200 OK
-```
-
-### Para entender a tabela likes_dislikes
-- no SQLite, lógicas booleanas devem ser controladas via 0 e 1 (INTEGER)
-- quando like valer 1 na tabela é porque a pessoa deu like no post
-    - na requisição like é true
-    
-- quando like valer 0 na tabela é porque a pessoa deu dislike no post
-    - na requisição like é false
-    
-- caso não exista um registro na tabela de relação, é porque a pessoa não deu like nem dislike
-- caso dê like em um post que já tenha dado like, o like é removido (deleta o item da tabela)
-- caso dê dislike em um post que já tenha dado dislike, o dislike é removido (deleta o item da tabela)
