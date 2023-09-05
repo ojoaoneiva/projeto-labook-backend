@@ -1,6 +1,8 @@
+<div align="center">
 # Labook
+</div>
 
-Go to the API Docummentation [here](https://documenter.getpostman.com/view/27685475/2s9Y5eNzL8)
+[API Docummentation](https://documenter.getpostman.com/view/27685475/2s9Y5eNzL8)
 
 ## About:
 The "Labook" project aims to build the backend of a small social media plataform and its API and database, with data source for users, posts, post's comments and likes. The project uses layered architecture and poo to estructure the code.
@@ -54,77 +56,3 @@ The "Labook" project aims to build the backend of a small social media plataform
 - Layred Architecture
 - Postman
 ---
-
-```
-
-# Exemplos de requisição
-
-## Login
-Endpoint público utilizado para login. Devolve um token jwt.
-```typescript
-// request POST /users/login
-// body JSON
-{
-  "email": "beltrana@email.com",
-  "password": "beltrana00"
-}
-
-// response
-// status 200 OK
-{
-  token: "um token jwt"
-}
-```
-
-
-## Create post
-Endpoint protegido, requer um token jwt para acessá-lo.
-```typescript
-// request POST /posts
-// headers.authorization = "token jwt"
-// body JSON
-{
-    "content": "Partiu happy hour!"
-}
-
-// response
-// status 201 CREATED
-```
-
-
-## Get posts
-Endpoint protegido, requer um token jwt para acessá-lo.
-```typescript
-// request GET /posts
-// headers.authorization = "token jwt"
-
-// response
-// status 200 OK
-[
-    {
-        "id": "uma uuid v4",
-        "content": "Hoje vou estudar POO!",
-        "likes": 2,
-        "dislikes" 1,
-        "createdAt": "2023-01-20T12:11:47:000Z"
-        "updatedAt": "2023-01-20T12:11:47:000Z"
-        "creator": {
-            "id": "uma uuid v4",
-            "name": "Fulano"
-        }
-    },
-    {
-        "id": "uma uuid v4",
-        "content": "kkkkkkkkkrying",
-        "likes": 0,
-        "dislikes" 0,
-        "createdAt": "2023-01-20T15:41:12:000Z"
-        "updatedAt": "2023-01-20T15:49:55:000Z"
-        "creator": {
-            "id": "uma uuid v4",
-            "name": "Ciclana"
-        }
-    }
-]
-```
-
